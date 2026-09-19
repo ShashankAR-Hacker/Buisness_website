@@ -1,0 +1,2492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NIA YOUTH VISION | Web Development & Digital Solutions</title>
+
+<meta name="description" content="NIA Youth Vision - Professional web development, digital solutions and commercial development. From idea to live website.">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+:root{
+    --bg:#050816;
+    --bg2:#091126;
+    --card:rgba(255,255,255,.065);
+    --card2:rgba(255,255,255,.09);
+    --white:#ffffff;
+    --muted:#aab4ca;
+    --cyan:#35d9ff;
+    --blue:#5b7cff;
+    --violet:#a66cff;
+    --pink:#ff5fa2;
+    --green:#64e6a4;
+    --yellow:#ffd166;
+    --line:rgba(255,255,255,.11);
+    --shadow:0 25px 80px rgba(0,0,0,.38);
+    --radius:28px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+html{
+    overflow-x:hidden;
+}
+
+body{
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background-color: var(--bg);
+    color:var(--white);
+    overflow-x:hidden;
+    line-height:1.6;
+}
+
+/* =========================================================
+   GLOBAL VIDEO BACKGROUND FOR ALL SECTIONS
+========================================================= */
+.global-video-bg{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    z-index:-10;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.global-video-bg video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:brightness(0.28) contrast(1.15);
+}
+
+.global-video-overlay{
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(53,217,255,.08), transparent 35%),
+        radial-gradient(circle at 90% 20%, rgba(166,108,255,.10), transparent 35%),
+        radial-gradient(circle at 50% 80%, rgba(255,95,162,.06), transparent 40%),
+        linear-gradient(180deg, rgba(5,8,22,0.65) 0%, rgba(5,8,22,0.85) 100%);
+    pointer-events:none;
+}
+
+/* BACKGROUND GRID OVERLAY */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-8;
+    background-image:
+        linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+    background-size:70px 70px;
+    mask-image:linear-gradient(to bottom,black,transparent 95%);
+}
+
+.orb{
+    position:fixed;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    filter:blur(110px);
+    opacity:.12;
+    pointer-events:none;
+    z-index:-9;
+}
+
+.orb.one{ background:var(--cyan); top:5%; left:-180px; }
+.orb.two{ background:var(--violet); top:45%; right:-180px; }
+.orb.three{ background:var(--pink); bottom:-180px; left:35%; }
+
+/* LOADER */
+#loader{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#03050e;
+    transition:opacity .8s ease,visibility .8s ease;
+}
+
+#loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-box{ text-align:center; }
+.loader-logo{
+    width:115px;
+    height:115px;
+    object-fit:cover;
+    border-radius:50%;
+    display:block;
+    margin:auto;
+    border:3px solid rgba(255,255,255,.8);
+    box-shadow:0 0 25px rgba(53,217,255,.45), 0 0 70px rgba(166,108,255,.25);
+    animation:loaderPulse 2s ease-in-out infinite;
+}
+
+.loader-name{
+    margin-top:22px;
+    font-size:14px;
+    letter-spacing:5px;
+    color:#dce5f8;
+}
+
+.loader-line{
+    width:170px;
+    height:3px;
+    margin:20px auto 0;
+    overflow:hidden;
+    background:rgba(255,255,255,.1);
+    border-radius:20px;
+}
+
+.loader-line span{
+    display:block;
+    width:50%;
+    height:100%;
+    background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));
+    animation:loaderMove 1.4s ease-in-out infinite;
+}
+
+@keyframes loaderPulse{ 50%{ transform:scale(1.06); } }
+@keyframes loaderMove{ 0%{ transform:translateX(-110%); } 100%{ transform:translateX(330%); } }
+
+/* =========================================================
+   DESKTOP TOP NAVIGATION
+========================================================= */
+nav.desktop-nav{
+    position:fixed;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(1180px,calc(100% - 30px));
+    height:68px;
+    padding:0 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(7,12,30,.75);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-radius:22px;
+    z-index:1000;
+    box-shadow:0 15px 50px rgba(0,0,0,.35);
+}
+
+.nav-brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    color:white;
+    text-decoration:none;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.nav-brand img{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    object-fit:cover;
+    border:1px solid rgba(255,255,255,.5);
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:27px;
+}
+
+.nav-links a{
+    color:#cbd4e8;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:600;
+    transition:.3s ease;
+}
+
+.nav-links a:hover{ color:white; }
+
+.nav-button{
+    padding:11px 18px;
+    border-radius:14px;
+    color:white !important;
+    background:linear-gradient(135deg,var(--blue),var(--violet));
+    box-shadow:0 10px 30px rgba(91,124,255,.22);
+}
+
+/* =========================================================
+   MOBILE BOTTOM NAVIGATION (THEMED GLASSMORPHIC APPSHELL)
+========================================================= */
+.mobile-bottom-nav{
+    display:none;
+}
+
+@media(max-width:760px){
+    nav.desktop-nav{
+        display:none;
+    }
+
+    .mobile-bottom-nav{
+        display:flex;
+        position:fixed;
+        bottom:16px;
+        left:50%;
+        transform:translateX(-50%);
+        width:calc(100% - 28px);
+        max-width:440px;
+        height:68px;
+        background:rgba(7, 12, 30, 0.82);
+        border:1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter:blur(24px);
+        -webkit-backdrop-filter:blur(24px);
+        border-radius:32px;
+        box-shadow:
+            0 20px 45px rgba(0, 0, 0, 0.65),
+            0 0 25px rgba(53, 217, 255, 0.08);
+        z-index:9999;
+        padding:5px 8px;
+        align-items:center;
+        justify-content:space-around;
+    }
+
+    .mob-nav-item{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        text-decoration:none;
+        padding:6px 8px;
+        border-radius:20px;
+        transition:all .25s ease;
+        flex:1;
+        min-width:0;
+    }
+
+    .mob-nav-item svg{
+        width:21px;
+        height:21px;
+        stroke:#8292b2;
+        fill:none;
+        stroke-width:2;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        transition:all .25s ease;
+    }
+
+    .mob-nav-item span{
+        font-size:10px;
+        font-weight:700;
+        color:#8292b2;
+        margin-top:2px;
+        transition:color .25s ease;
+        white-space:nowrap;
+    }
+
+    .mob-nav-item.active{
+        background:linear-gradient(135deg, rgba(53, 217, 255, 0.16), rgba(91, 124, 255, 0.16));
+        border:1px solid rgba(53, 217, 255, 0.28);
+        box-shadow:0 0 16px rgba(53, 217, 255, 0.18);
+    }
+
+    .mob-nav-item.active svg{
+        stroke:var(--cyan);
+        transform:translateY(-1px) scale(1.05);
+        filter:drop-shadow(0 0 8px rgba(53, 217, 255, 0.45));
+    }
+
+    .mob-nav-item.active span{
+        color:#ffffff;
+        font-weight:800;
+    }
+}
+
+/* GENERAL SECTION STYLES */
+section{
+    position:relative;
+    padding:120px 7%;
+    z-index:1;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:8px 13px;
+    border:1px solid rgba(53,217,255,.22);
+    background:rgba(53,217,255,.06);
+    color:#7ce7ff;
+    border-radius:100px;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.eyebrow::before{
+    content:"";
+    width:6px;
+    height:6px;
+    background:var(--cyan);
+    border-radius:50%;
+    box-shadow:0 0 12px var(--cyan);
+}
+
+.section-title{
+    margin-top:18px;
+    font-size:clamp(35px,5vw,65px);
+    line-height:1.03;
+    letter-spacing:-2px;
+}
+
+.section-title span{
+    background:linear-gradient(100deg,var(--cyan),var(--violet),var(--pink));
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.section-text{
+    margin-top:20px;
+    max-width:700px;
+    color:var(--muted);
+    font-size:16px;
+}
+
+.reveal{
+    opacity:0;
+    transform:translateY(35px);
+    transition:opacity .8s ease,transform .8s ease;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* HERO */
+.hero{
+    min-height:100vh;
+    padding-top:140px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+}
+
+.hero-content{
+    max-width:1000px;
+    margin:auto;
+}
+
+.hero-logo-wrap{
+    width:190px;
+    height:190px;
+    margin:0 auto 30px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.hero-logo-wrap::before,
+.hero-logo-wrap::after{
+    content:"";
+    position:absolute;
+    inset:-12px;
+    border-radius:50%;
+    border:1px solid rgba(53,217,255,.3);
+    animation:orbit 7s linear infinite;
+}
+
+.hero-logo-wrap::after{
+    inset:-25px;
+    border-color:rgba(166,108,255,.18);
+    animation-duration:10s;
+    animation-direction:reverse;
+}
+
+.hero-logo{
+    width:175px;
+    height:175px;
+    object-fit:cover;
+    border-radius:50%;
+    border:4px solid rgba(255,255,255,.85);
+    box-shadow:0 0 30px rgba(53,217,255,.32), 0 0 100px rgba(166,108,255,.2);
+    transition:.5s ease;
+    position:relative;
+    z-index:2;
+}
+
+.hero-logo:hover{
+    transform:scale(1.04) rotate(2deg);
+}
+
+@keyframes orbit{
+    to{ transform:rotate(360deg); }
+}
+
+.hero h1{
+    font-size:clamp(45px,8vw,100px);
+    line-height:.95;
+    letter-spacing:-5px;
+    font-weight:900;
+}
+
+.gradient-text{
+    background:linear-gradient(90deg,#fff,var(--cyan),var(--violet),var(--pink));
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero-subtitle{
+    margin:25px auto 0;
+    max-width:720px;
+    color:#b8c2d8;
+    font-size:18px;
+}
+
+.hero-tag{
+    margin-top:22px;
+    font-size:14px;
+    color:#8e9ab3;
+}
+
+.hero-actions{
+    margin-top:34px;
+    display:flex;
+    justify-content:center;
+    gap:13px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    padding:15px 23px;
+    border-radius:16px;
+    text-decoration:none;
+    font-weight:800;
+    font-size:13px;
+    transition:.35s ease;
+}
+
+.btn-primary{
+    color:white;
+    background:linear-gradient(135deg,var(--blue),var(--violet));
+    box-shadow:0 15px 35px rgba(91,124,255,.24);
+}
+
+.btn-secondary{
+    color:white;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.05);
+}
+
+.btn:hover{
+    transform:translateY(-4px);
+}
+
+/* ABOUT */
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+}
+
+.about-visual{
+    min-height:500px;
+    border-radius:35px;
+    position:relative;
+    overflow:hidden;
+    border:1px solid var(--line);
+    background:
+        radial-gradient(circle at 30% 25%,rgba(53,217,255,.25),transparent 25%),
+        radial-gradient(circle at 75% 70%,rgba(166,108,255,.24),transparent 25%),
+        linear-gradient(145deg,rgba(11,21,48,0.7),rgba(8,11,25,0.85));
+    backdrop-filter:blur(10px);
+    box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.about-orbit{
+    width:280px;
+    height:280px;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:50%;
+    position:relative;
+    animation:spin 18s linear infinite;
+}
+
+.about-orbit::before{
+    content:"NIA";
+    position:absolute;
+    inset:55px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,var(--blue),var(--violet));
+    font-size:60px;
+    font-weight:900;
+    box-shadow:0 0 70px rgba(91,124,255,.35);
+}
+
+.about-orbit::after{
+    content:"";
+    position:absolute;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--cyan);
+    top:15px;
+    left:50%;
+    box-shadow:0 0 20px var(--cyan);
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+
+.about-content h3{
+    font-size:30px;
+    margin-bottom:14px;
+}
+
+.about-content p{
+    color:var(--muted);
+    margin-bottom:20px;
+}
+
+.about-points{
+    display:grid;
+    gap:12px;
+}
+
+.about-point{
+    display:flex;
+    gap:13px;
+    align-items:flex-start;
+    padding:15px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.035);
+    border-radius:17px;
+    backdrop-filter:blur(6px);
+}
+
+.about-point b{
+    color:white;
+    display:block;
+}
+
+.about-point span{
+    color:#8793aa;
+    font-size:13px;
+}
+
+.tick{
+    width:28px;
+    height:28px;
+    flex:none;
+    border-radius:9px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(53,217,255,.1);
+    color:var(--cyan);
+}
+
+/* SERVICES */
+.services-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:30px;
+    margin-bottom:45px;
+}
+
+.service-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.service-card{
+    position:relative;
+    padding:30px;
+    min-height:260px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.03));
+    backdrop-filter:blur(14px);
+    overflow:hidden;
+    transition:.45s ease;
+}
+
+.service-card::before{
+    content:"";
+    position:absolute;
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:var(--cyan);
+    filter:blur(75px);
+    opacity:0;
+    top:-70px;
+    right:-50px;
+    transition:.45s ease;
+}
+
+.service-card:hover{
+    transform:translateY(-9px);
+    border-color:rgba(53,217,255,.25);
+    box-shadow:var(--shadow);
+}
+
+.service-card:hover::before{
+    opacity:.12;
+}
+
+.service-number{
+    font-size:12px;
+    color:#71809b;
+    letter-spacing:2px;
+}
+
+.service-icon{
+    width:55px;
+    height:55px;
+    margin:22px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:17px;
+    font-size:24px;
+    background:linear-gradient(135deg,rgba(53,217,255,.13),rgba(166,108,255,.15));
+    border:1px solid rgba(255,255,255,.09);
+}
+
+.service-card h3{
+    font-size:21px;
+    margin-bottom:9px;
+}
+
+.service-card p{
+    color:#8f9bb2;
+    font-size:14px;
+}
+
+.service-list{
+    margin-top:17px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.service-list span{
+    padding:5px 8px;
+    border-radius:8px;
+    font-size:10px;
+    color:#b9c5db;
+    background:rgba(255,255,255,.055);
+}
+
+/* WEB DEVELOPMENT */
+.web-layout{
+    display:grid;
+    grid-template-columns:1fr 1.2fr;
+    gap:55px;
+    align-items:center;
+}
+
+.web-panel{
+    padding:38px;
+    border:1px solid var(--line);
+    border-radius:32px;
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(16px);
+    box-shadow:var(--shadow);
+}
+
+.web-panel h3{
+    font-size:32px;
+    margin-bottom:15px;
+}
+
+.web-panel p{
+    color:var(--muted);
+}
+
+.stack{
+    margin-top:27px;
+    display:grid;
+    gap:12px;
+}
+
+.stack-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 16px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:rgba(255,255,255,.035);
+}
+
+.stack-row span:first-child{
+    color:#dce4f5;
+    font-weight:700;
+}
+
+.stack-row span:last-child{
+    color:#7c8aa4;
+    font-size:12px;
+}
+
+.web-services{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.web-service{
+    padding:23px;
+    min-height:165px;
+    border-radius:23px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.04);
+    backdrop-filter:blur(12px);
+    transition:.35s ease;
+}
+
+.web-service:hover{
+    transform:translateY(-5px);
+    background:rgba(255,255,255,.065);
+}
+
+.web-service strong{
+    display:block;
+    margin-bottom:9px;
+    font-size:16px;
+}
+
+.web-service p{
+    color:#8996ae;
+    font-size:13px;
+}
+
+/* PROCESS */
+.process{
+    overflow:hidden;
+}
+
+.process-line{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:15px;
+    margin-top:55px;
+}
+
+.process-card{
+    position:relative;
+    padding:25px 20px;
+    border-radius:25px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(12px);
+}
+
+.process-card::after{
+    content:"→";
+    position:absolute;
+    right:-15px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#63718d;
+    font-size:22px;
+}
+
+.process-card:last-child::after{
+    display:none;
+}
+
+.process-num{
+    font-size:11px;
+    color:var(--cyan);
+    letter-spacing:2px;
+    font-weight:900;
+}
+
+.process-card h3{
+    margin-top:17px;
+    font-size:18px;
+}
+
+.process-card p{
+    margin-top:8px;
+    color:#8692aa;
+    font-size:12px;
+}
+
+/* IDEA LIVE */
+.idea-live{
+    padding-top:80px;
+}
+
+.idea-box{
+    min-height:390px;
+    border-radius:40px;
+    position:relative;
+    overflow:hidden;
+    padding:55px;
+    border:1px solid rgba(255,255,255,.12);
+    background:
+        radial-gradient(circle at 15% 20%,rgba(53,217,255,.18),transparent 28%),
+        radial-gradient(circle at 85% 75%,rgba(255,95,162,.15),transparent 30%),
+        linear-gradient(135deg,rgba(11,20,45,0.85),rgba(17,16,42,0.85));
+    backdrop-filter:blur(20px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:40px;
+}
+
+.idea-copy{
+    max-width:650px;
+}
+
+.idea-copy .eyebrow{
+    margin-bottom:22px;
+}
+
+.idea-copy h2{
+    font-size:clamp(40px,6vw,78px);
+    line-height:.98;
+    letter-spacing:-3px;
+}
+
+.idea-copy p{
+    margin-top:20px;
+    color:#a9b4c9;
+    max-width:600px;
+}
+
+.idea-graphic{
+    width:270px;
+    height:270px;
+    flex:none;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
+
+.idea-graphic::before{
+    content:"";
+    position:absolute;
+    inset:30px;
+    border-radius:50%;
+    border:1px dashed rgba(255,255,255,.2);
+    animation:spin 12s linear infinite;
+}
+
+.idea-center{
+    width:125px;
+    height:125px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:linear-gradient(135deg,var(--cyan),var(--blue),var(--violet));
+    font-weight:900;
+    font-size:19px;
+    box-shadow:0 0 60px rgba(91,124,255,.4);
+}
+
+/* COMMERCIAL */
+.commercial-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:35px;
+    margin-top:45px;
+}
+
+.commercial-main{
+    min-height:420px;
+    padding:45px;
+    border-radius:34px;
+    border:1px solid var(--line);
+    background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
+    backdrop-filter:blur(14px);
+}
+
+.commercial-main h3{
+    font-size:35px;
+    margin-bottom:15px;
+}
+
+.commercial-main p{
+    color:var(--muted);
+    max-width:700px;
+}
+
+.commercial-features{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.commercial-feature{
+    padding:17px;
+    border-radius:16px;
+    background:rgba(255,255,255,.045);
+    border:1px solid var(--line);
+}
+
+.commercial-feature b{
+    font-size:13px;
+}
+
+.commercial-feature p{
+    margin-top:5px;
+    font-size:11px;
+    color:#7e8ba3;
+}
+
+.commercial-side{
+    display:grid;
+    gap:15px;
+}
+
+.commercial-mini{
+    padding:27px;
+    border-radius:25px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.045);
+    backdrop-filter:blur(12px);
+}
+
+.commercial-mini h4{
+    font-size:18px;
+}
+
+.commercial-mini p{
+    color:#8591a8;
+    font-size:13px;
+    margin-top:7px;
+}
+
+/* TEAM */
+.team-grid{
+    margin-top:50px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:17px;
+}
+
+.team-card{
+    overflow:hidden;
+    border-radius:28px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.045);
+    backdrop-filter:blur(14px);
+    transition:.4s ease;
+}
+
+.team-card:hover{
+    transform:translateY(-8px);
+    box-shadow:var(--shadow);
+}
+
+.team-image{
+    height:330px;
+    position:relative;
+    overflow:hidden;
+    background:radial-gradient(circle at 50% 20%,rgba(53,217,255,.18),transparent 30%), #0b1125;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.team-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s ease;
+}
+
+.team-card:hover .team-image img{
+    transform:scale(1.04);
+}
+
+.placeholder{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    font-weight:900;
+    color:white;
+    background:linear-gradient(135deg,var(--blue),var(--violet));
+    box-shadow:0 0 50px rgba(91,124,255,.3);
+}
+
+.team-info{
+    padding:23px;
+}
+
+.team-info small{
+    color:var(--cyan);
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.team-info h3{
+    margin-top:7px;
+    font-size:20px;
+}
+
+.team-info p{
+    margin-top:8px;
+    color:#8591a8;
+    font-size:12px;
+}
+
+/* QUOTE */
+.quote-section{
+    padding-top:80px;
+    padding-bottom:80px;
+}
+
+.quote-box{
+    text-align:center;
+    max-width:1000px;
+    margin:auto;
+    padding:75px 35px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(8px);
+}
+
+.quote-mark{
+    font-size:70px;
+    line-height:.5;
+    color:var(--cyan);
+    opacity:.7;
+}
+
+.quote-box h2{
+    margin-top:25px;
+    font-size:clamp(30px,5vw,58px);
+    line-height:1.15;
+    letter-spacing:-2px;
+}
+
+.quote-box h2 span{
+    background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.quote-box p{
+    margin-top:22px;
+    color:#7f8ba3;
+}
+
+/* CONTACT */
+.contact-grid{
+    margin-top:50px;
+    display:grid;
+    grid-template-columns:.85fr 1.15fr;
+    gap:25px;
+}
+
+.contact-info{
+    padding:38px;
+    border-radius:30px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(16px);
+}
+
+.contact-info h3{
+    font-size:30px;
+}
+
+.contact-info > p{
+    margin-top:10px;
+    color:#8d99b0;
+}
+
+.contact-item{
+    margin-top:23px;
+    padding:17px;
+    border-radius:17px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--line);
+}
+
+.contact-item small{
+    color:#74819a;
+    font-size:10px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.contact-item strong{
+    display:block;
+    margin-top:5px;
+    font-size:14px;
+    word-break:break-word;
+}
+
+.hours{
+    margin-top:20px;
+}
+
+.hours-title{
+    color:var(--cyan);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.hour-row{
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    color:#a9b4c8;
+    font-size:13px;
+}
+
+.hour-row:last-child{
+    border-bottom:0;
+}
+
+.closed{
+    color:#ff799b;
+}
+
+.contact-form{
+    padding:38px;
+    border-radius:30px;
+    border:1px solid var(--line);
+    background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+    backdrop-filter:blur(18px);
+}
+
+.form-title{
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.form-subtitle{
+    color:#8995ac;
+    font-size:13px;
+    margin-bottom:25px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.input-group{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.input-group.full{
+    grid-column:1/-1;
+}
+
+.input-group label{
+    font-size:11px;
+    color:#9ca8bc;
+    font-weight:700;
+}
+
+.input-group input,
+.input-group textarea{
+    width:100%;
+    border:1px solid rgba(255,255,255,.15);
+    outline:none;
+    background:rgba(0,0,0,.35);
+    color:white;
+    padding:14px 15px;
+    border-radius:13px;
+    font-family:inherit;
+    transition:.3s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus{
+    border-color:rgba(53,217,255,.6);
+    box-shadow:0 0 0 4px rgba(53,217,255,.1);
+}
+
+.input-group textarea{
+    min-height:140px;
+    resize:vertical;
+}
+
+.form-submit{
+    margin-top:18px;
+    width:100%;
+    border:0;
+    cursor:pointer;
+    color:white;
+    padding:16px;
+    border-radius:14px;
+    font-weight:900;
+    background:linear-gradient(135deg,var(--blue),var(--violet),var(--pink));
+    box-shadow:0 15px 35px rgba(91,124,255,.2);
+    transition:.35s ease;
+}
+
+.form-submit:hover{
+    transform:translateY(-3px);
+}
+
+.form-submit:disabled{
+    opacity:0.6;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.form-alert{
+    margin-top:14px;
+    padding:12px;
+    border-radius:12px;
+    font-size:13px;
+    display:none;
+}
+
+.form-alert.error{
+    display:block;
+    background:rgba(255,95,162,0.15);
+    border:1px solid var(--pink);
+    color:var(--pink);
+}
+
+/* =========================================================
+   SUCCESS POPUP MODAL
+========================================================= */
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(3, 5, 14, 0.82);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .35s ease, visibility .35s ease;
+    padding:20px;
+}
+
+.modal-overlay.open{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal-card{
+    background:linear-gradient(145deg, rgba(16, 27, 60, 0.95), rgba(9, 15, 34, 0.95));
+    border:1px solid rgba(53, 217, 255, 0.35);
+    border-radius:28px;
+    padding:40px 32px;
+    max-width:460px;
+    width:100%;
+    text-align:center;
+    box-shadow:0 25px 80px rgba(0, 0, 0, 0.7), 0 0 45px rgba(53, 217, 255, 0.2);
+    transform:scale(0.9) translateY(20px);
+    transition:transform .35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.open .modal-card{
+    transform:scale(1) translateY(0);
+}
+
+.modal-icon{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    background:rgba(100, 230, 164, 0.12);
+    border:2px solid var(--green);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 20px;
+    color:var(--green);
+    font-size:36px;
+    box-shadow:0 0 30px rgba(100, 230, 164, 0.3);
+}
+
+.modal-title{
+    font-size:24px;
+    font-weight:900;
+    color:#ffffff;
+    margin-bottom:10px;
+}
+
+.modal-text{
+    font-size:14px;
+    color:#aab4ca;
+    line-height:1.6;
+    margin-bottom:26px;
+}
+
+.modal-close-btn{
+    display:inline-block;
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:14px;
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:1px;
+    color:white;
+    background:linear-gradient(135deg, var(--cyan), var(--blue));
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(53, 217, 255, 0.3);
+    transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.modal-close-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 15px 35px rgba(53, 217, 255, 0.45);
+}
+
+/* FOOTER */
+footer{
+    padding:45px 7% 40px;
+    border-top:1px solid var(--line);
+    background:rgba(0,0,0,.35);
+    backdrop-filter:blur(10px);
+    position:relative;
+    z-index:1;
+}
+
+.footer-inner{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    gap:30px;
+    align-items:center;
+}
+
+.footer-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.footer-brand img{
+    width:45px;
+    height:45px;
+    object-fit:cover;
+    border-radius:50%;
+}
+
+.footer-brand strong{
+    display:block;
+}
+
+.footer-brand span{
+    color:#71809a;
+    font-size:11px;
+}
+
+.footer-copy{
+    color:#66738b;
+    font-size:11px;
+    text-align:right;
+}
+
+/* BACK TO TOP */
+.top{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:45px;
+    height:45px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    text-decoration:none;
+    background:rgba(12,18,39,.8);
+    border:1px solid var(--line);
+    backdrop-filter:blur(15px);
+    opacity:0;
+    pointer-events:none;
+    transition:.3s ease;
+    z-index:900;
+}
+
+.top.visible{
+    opacity:1;
+    pointer-events:auto;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+@media(max-width:1000px){
+    .nav-links{ gap:15px; }
+    .service-grid{ grid-template-columns:repeat(2,1fr); }
+    .team-grid{ grid-template-columns:repeat(2,1fr); }
+    .process-line{ grid-template-columns:repeat(2,1fr); }
+    .process-card::after{ display:none; }
+    .web-layout, .commercial-grid, .contact-grid{ grid-template-columns:1fr; }
+    .idea-box{ flex-direction:column; text-align:center; }
+}
+
+@media(max-width:760px){
+    section{
+        padding:85px 5% 105px;
+    }
+    .hero{
+        padding-top:80px;
+        min-height:92vh;
+    }
+    .hero-logo-wrap{ width:145px; height:145px; }
+    .hero-logo{ width:135px; height:135px; }
+    .hero h1{ letter-spacing:-3px; }
+    .hero-subtitle{ font-size:15px; }
+    .about-grid{ grid-template-columns:1fr; }
+    .about-visual{ min-height:350px; }
+    .services-header{ display:block; }
+    .service-grid{ grid-template-columns:1fr; }
+    .web-services{ grid-template-columns:1fr; }
+    .process-line{ grid-template-columns:1fr; }
+    .idea-box{ padding:35px 23px; }
+    .idea-graphic{ width:210px; height:210px; }
+    .commercial-main{ padding:30px 23px; }
+    .commercial-features{ grid-template-columns:1fr; }
+    .team-grid{ grid-template-columns:1fr; }
+    .team-image{ height:390px; }
+    .form-grid{ grid-template-columns:1fr; }
+    .input-group.full{ grid-column:auto; }
+    .contact-form, .contact-info{ padding:27px 21px; }
+    .footer-inner{ flex-direction:column; align-items:flex-start; }
+    .footer-copy{ text-align:left; }
+    .top{ bottom:95px; }
+    footer{ padding-bottom:110px; }
+}
+
+/* REDUCED MOTION */
+@media(prefers-reduced-motion:reduce){
+    *, *::before, *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     GLOBAL FULL-PAGE VIDEO BACKGROUND
+===================================================== -->
+<div class="global-video-bg">
+    <video autoplay loop muted playsinline poster="NIA LOGO.jpeg">
+        <source src="neon-video.webm" type="video/webm">
+    </video>
+    <div class="global-video-overlay"></div>
+</div>
+
+<!-- BACKGROUND ACCENT ORBS -->
+<div class="orb one"></div>
+<div class="orb two"></div>
+<div class="orb three"></div>
+
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-box">
+        <img src="logo.jpeg" class="loader-logo" alt="NIA Youth Vision Logo">
+        <div class="loader-name">NIA YOUTH VISION</div>
+        <div class="loader-line"><span></span></div>
+    </div>
+</div>
+
+<!-- =====================================================
+     DESKTOP TOP NAVIGATION
+===================================================== -->
+<nav class="desktop-nav">
+    <a href="#home" class="nav-brand">
+        <img src="logo.jpeg" alt="NIA Logo">
+        <span>NIA YOUTH VISION</span>
+    </a>
+
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#team">Team</a>
+        <a href="#contact" class="nav-button">Contact Us</a>
+    </div>
+</nav>
+
+<!-- =====================================================
+     MOBILE FLOATING BOTTOM APP-BAR
+===================================================== -->
+<nav class="mobile-bottom-nav">
+    <a href="#home" class="mob-nav-item active" data-section="home">
+        <svg viewBox="0 0 24 24">
+            <path d="M3 10.5 12 3l9 7.5V20a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 20z"/>
+            <path d="M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6"/>
+        </svg>
+        <span>Home</span>
+    </a>
+
+    <a href="#about" class="mob-nav-item" data-section="about">
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <line x1="12" y1="8" x2="12" y2="8.01"/>
+            <line x1="12" y1="11" x2="12" y2="16"/>
+        </svg>
+        <span>About</span>
+    </a>
+
+    <a href="#services" class="mob-nav-item" data-section="services">
+        <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+        <span>Services</span>
+    </a>
+
+    <a href="#process" class="mob-nav-item" data-section="process">
+        <svg viewBox="0 0 24 24">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        <span>Process</span>
+    </a>
+
+    <a href="#team" class="mob-nav-item" data-section="team">
+        <svg viewBox="0 0 24 24">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>Team</span>
+    </a>
+
+    <a href="#contact" class="mob-nav-item" data-section="contact">
+        <svg viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span>Contact</span>
+    </a>
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+<section class="hero" id="home">
+    <div class="hero-content reveal">
+        <h1 style="margin-top:20px;">
+            NIA <span class="gradient-text">YOUTH VISION</span>
+        </h1>
+
+        <div class="hero-logo-wrap">
+            <img src="logo.jpeg" class="hero-logo" alt="NIA Youth Vision">
+        </div>
+
+        <div class="eyebrow">Digital Development Startup</div>
+
+        <p class="hero-subtitle">
+            We turn bold ideas into reality through professional
+            web development, digital solutions and commercial development.
+        </p>
+
+        <p class="hero-tag">
+            From <b>IDEA</b> → <b>DEVELOPMENT</b> → <b>DEPLOYMENT</b> → <b>LIVE</b>
+        </p>
+
+        <div class="hero-actions">
+            <a href="#services" class="btn btn-primary">Explore Services →</a>
+            <a href="#contact" class="btn btn-secondary">Start a Project</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+<section id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-visual reveal">
+                <div class="about-orbit"></div>
+            </div>
+
+            <div class="about-content reveal">
+                <div class="eyebrow">Who We Are</div>
+
+                <h2 class="section-title">
+                    Building ideas into <span>digital reality.</span>
+                </h2>
+
+                <p>
+                    NIA Youth Vision is a growing development startup focused
+                    on creating modern digital experiences, professional
+                    websites and technology-driven solutions for individuals,
+                    businesses and organizations.
+                </p>
+
+                <p>
+                    Our approach is simple: understand the idea, plan the
+                    solution, develop it professionally and take it all the
+                    way to a live and usable product.
+                </p>
+
+                <div class="about-points">
+                    <div class="about-point">
+                        <div class="tick">✓</div>
+                        <div>
+                            <b>Complete Development Journey</b>
+                            <span>From planning and design to deployment and maintenance.</span>
+                        </div>
+                    </div>
+
+                    <div class="about-point">
+                        <div class="tick">✓</div>
+                        <div>
+                            <b>Business-Focused Solutions</b>
+                            <span>Technology designed around real business requirements.</span>
+                        </div>
+                    </div>
+
+                    <div class="about-point">
+                        <div class="tick">✓</div>
+                        <div>
+                            <b>Long-Term Vision</b>
+                            <span>Building reliable digital products for future growth.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
+<section id="services">
+    <div class="container">
+        <div class="services-header reveal">
+            <div>
+                <div class="eyebrow">What We Do</div>
+                <h2 class="section-title">
+                    Our <span>Services</span>
+                </h2>
+            </div>
+
+            <p class="section-text">
+                Technology, development and digital services designed to
+                transform ideas into practical solutions.
+            </p>
+        </div>
+
+        <div class="service-grid">
+            <div class="service-card reveal">
+                <div class="service-number">01 / WEB</div>
+                <div class="service-icon">◈</div>
+                <h3>Web Development</h3>
+                <p>Professional websites built around your brand, audience and business objectives.</p>
+                <div class="service-list">
+                    <span>Business Website</span>
+                    <span>Custom Website</span>
+                    <span>Portfolio</span>
+                </div>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-number">02 / FRONT-END</div>
+                <div class="service-icon">⌘</div>
+                <h3>Front-End Development</h3>
+                <p>Modern user interfaces with responsive layouts, smooth interactions and professional design.</p>
+                <div class="service-list">
+                    <span>HTML</span>
+                    <span>CSS</span>
+                    <span>JavaScript</span>
+                </div>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-number">03 / BACK-END</div>
+                <div class="service-icon">⚙</div>
+                <h3>Back-End Development</h3>
+                <p>Server-side systems, application logic and reliable functionality behind your website.</p>
+                <div class="service-list">
+                    <span>APIs</span>
+                    <span>Logic</span>
+                    <span>Server</span>
+                </div>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-number">04 / DATABASE</div>
+                <div class="service-icon">▣</div>
+                <h3>Database Development</h3>
+                <p>Structured data systems for storing, managing and accessing application information.</p>
+                <div class="service-list">
+                    <span>SQL</span>
+                    <span>Data</span>
+                    <span>Security</span>
+                </div>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-number">05 / RESPONSIVE</div>
+                <div class="service-icon">▤</div>
+                <h3>Responsive Websites</h3>
+                <p>Websites designed to work smoothly across desktop, tablet and mobile devices.</p>
+                <div class="service-list">
+                    <span>Mobile</span>
+                    <span>Tablet</span>
+                    <span>Desktop</span>
+                </div>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-number">06 / DEPLOYMENT</div>
+                <div class="service-icon">↗</div>
+                <h3>Deployment & Hosting</h3>
+                <p>We help move the completed website from development into a live online environment.</p>
+                <div class="service-list">
+                    <span>Domain</span>
+                    <span>Hosting</span>
+                    <span>Deployment</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     WEB DEVELOPMENT
+===================================================== -->
+<section class="web-section" id="web-development">
+    <div class="container">
+        <div class="web-layout">
+            <div class="web-panel reveal">
+                <div class="eyebrow">Core Business</div>
+                <h2 class="section-title">
+                    Complete <span>Web Development</span>
+                </h2>
+                <p style="margin-top:20px;">
+                    NIA Youth Vision can handle the complete website journey.
+                    You don't have to manage different people for design,
+                    development, database, deployment and hosting.
+                </p>
+
+                <div class="stack">
+                    <div class="stack-row">
+                        <span>01 — Idea & Requirement</span>
+                        <span>Understand</span>
+                    </div>
+                    <div class="stack-row">
+                        <span>02 — Planning & UI</span>
+                        <span>Design</span>
+                    </div>
+                    <div class="stack-row">
+                        <span>03 — Front-End</span>
+                        <span>Build</span>
+                    </div>
+                    <div class="stack-row">
+                        <span>04 — Back-End & Database</span>
+                        <span>Develop</span>
+                    </div>
+                    <div class="stack-row">
+                        <span>05 — Testing</span>
+                        <span>Verify</span>
+                    </div>
+                    <div class="stack-row">
+                        <span>06 — Domain & Hosting</span>
+                        <span>Launch</span>
+                    </div>
+                    <div class="stack-row">
+                        <span>07 — Maintenance</span>
+                        <span>Support</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="web-services">
+                <div class="web-service reveal">
+                    <strong>Front-End Development</strong>
+                    <p>Clean interfaces, responsive layouts, animations and user-friendly experiences.</p>
+                </div>
+                <div class="web-service reveal">
+                    <strong>Back-End Development</strong>
+                    <p>Functional application logic, APIs, server-side operations and secure data handling.</p>
+                </div>
+                <div class="web-service reveal">
+                    <strong>Database Development</strong>
+                    <p>Organized databases designed for efficient storage and management of information.</p>
+                </div>
+                <div class="web-service reveal">
+                    <strong>Business Websites</strong>
+                    <p>Professional online presence for startups, businesses, organizations and services.</p>
+                </div>
+                <div class="web-service reveal">
+                    <strong>Testing & Optimization</strong>
+                    <p>Checking usability, responsiveness, links, functionality and overall experience.</p>
+                </div>
+                <div class="web-service reveal">
+                    <strong>Domain & Hosting</strong>
+                    <p>Assistance with domain setup, hosting, deployment and taking the website live.</p>
+                </div>
+                <div class="web-service reveal">
+                    <strong>API & Integration</strong>
+                    <p>Connecting websites with required external services and digital systems.</p>
+                </div>
+                <div class="web-service reveal">
+                    <strong>Maintenance</strong>
+                    <p>Updates, improvements and ongoing website support after launch.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     PROCESS
+===================================================== -->
+<section id="process" class="process">
+    <div class="container">
+        <div class="reveal">
+            <div class="eyebrow">Our Workflow</div>
+            <h2 class="section-title">
+                From <span>Idea</span> to Live.
+            </h2>
+            <p class="section-text">
+                A structured development process that keeps your project
+                clear, organized and moving forward.
+            </p>
+        </div>
+
+        <div class="process-line">
+            <div class="process-card reveal">
+                <div class="process-num">STEP 01</div>
+                <h3>Idea</h3>
+                <p>Understand your concept, requirements and objectives.</p>
+            </div>
+            <div class="process-card reveal">
+                <div class="process-num">STEP 02</div>
+                <h3>Plan</h3>
+                <p>Create the structure, features and development plan.</p>
+            </div>
+            <div class="process-card reveal">
+                <div class="process-num">STEP 03</div>
+                <h3>Build</h3>
+                <p>Design and develop the complete digital solution.</p>
+            </div>
+            <div class="process-card reveal">
+                <div class="process-num">STEP 04</div>
+                <h3>Test</h3>
+                <p>Check performance, functionality and responsiveness.</p>
+            </div>
+            <div class="process-card reveal">
+                <div class="process-num">STEP 05</div>
+                <h3>Live</h3>
+                <p>Deploy, connect domain and hosting, then launch.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     IDEA TO LIVE
+===================================================== -->
+<section class="idea-live">
+    <div class="container">
+        <div class="idea-box reveal">
+            <div class="idea-copy">
+                <div class="eyebrow">Complete Digital Journey</div>
+                <h2>
+                    IDEA <span style="color:var(--cyan);">→</span> LIVE
+                </h2>
+                <p>
+                    Your idea should not stop at development.
+                    NIA Youth Vision focuses on the complete journey —
+                    planning, building, testing, deployment, domain,
+                    hosting and continued support.
+                </p>
+            </div>
+
+            <div class="idea-graphic">
+                <div class="idea-center">
+                    NIA<br>DIGITAL
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     COMMERCIAL DEVELOPMENT
+===================================================== -->
+<section class="commercial" id="commercial">
+    <div class="container">
+        <div class="reveal">
+            <div class="eyebrow">Another Business Vertical</div>
+            <h2 class="section-title">
+                Commercial <span>Development</span>
+            </h2>
+            <p class="section-text">
+                Along with digital development, NIA Youth Vision is also
+                building its presence in commercial development and
+                business-oriented projects.
+            </p>
+        </div>
+
+        <div class="commercial-grid">
+            <div class="commercial-main reveal">
+                <h3>Developing Commercial Opportunities.</h3>
+                <p>
+                    Our commercial development vision focuses on creating
+                    practical business spaces and opportunities with a
+                    professional, organized and future-oriented approach.
+                </p>
+
+                <div class="commercial-features">
+                    <div class="commercial-feature">
+                        <b>Business Spaces</b>
+                        <p>Planning and development for commercial purposes.</p>
+                    </div>
+                    <div class="commercial-feature">
+                        <b>Customer Focus</b>
+                        <p>Solutions designed around practical business needs.</p>
+                    </div>
+                    <div class="commercial-feature">
+                        <b>Modern Approach</b>
+                        <p>Professional planning with a technology mindset.</p>
+                    </div>
+                    <div class="commercial-feature">
+                        <b>Future Growth</b>
+                        <p>Designed with scalability and long-term vision.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="commercial-side">
+                <div class="commercial-mini reveal">
+                    <h4>Business Development</h4>
+                    <p>Turning commercial ideas into structured, practical development opportunities.</p>
+                </div>
+                <div class="commercial-mini reveal">
+                    <h4>Professional Planning</h4>
+                    <p>Clear planning, organized execution and long-term development thinking.</p>
+                </div>
+                <div class="commercial-mini reveal">
+                    <h4>NIA Vision</h4>
+                    <p>Building a company that connects technology, entrepreneurship and commercial opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     TEAM
+===================================================== -->
+<section id="team">
+    <div class="container">
+        <div class="reveal">
+            <div class="eyebrow">Leadership</div>
+            <h2 class="section-title">
+                The <span>Team</span> Behind NIA.
+            </h2>
+            <p class="section-text">
+                A young team working across leadership, operations,
+                technology and marketing.
+            </p>
+        </div>
+
+        <div class="team-grid">
+            <!-- AKASH -->
+            <div class="team-card reveal">
+                <div class="team-image">
+                    <img src="akash.jpeg" alt="Mr. Akash K B" loading="lazy">
+                </div>
+                <div class="team-info">
+                    <small>Founder & CEO</small>
+                    <h3>Mr. Akash K B</h3>
+                    <p>Startup vision, leadership, business strategy, major decisions and presentations.</p>
+                </div>
+            </div>
+
+            <!-- NIKHITHA -->
+            <div class="team-card reveal">
+                <div class="team-image">
+                    <img src="nikitha.jpeg" alt="Ms. Nikhitha K P" loading="lazy">
+                </div>
+                <div class="team-info">
+                    <small>Co-Founder & COO</small>
+                    <h3>Ms. Nikhitha K P (Writer)</h3>
+                    <p>Operations management, team coordination, planning and execution.</p>
+                </div>
+            </div>
+
+            <!-- SHASHANK -->
+            <div class="team-card reveal">
+                <div class="team-image">
+                    <img src="shashank.jpeg" alt="Mr. Shashank A R" loading="lazy">
+                </div>
+                <div class="team-info">
+                    <small>CTO</small>
+                    <h3>Mr. Shashank A R</h3>
+                    <p>Website development, technology, AI solutions and product development.</p>
+                </div>
+            </div>
+
+            <!-- GURUCHARAN -->
+            <div class="team-card reveal">
+                <div class="team-image">
+                    <img src="gurucharan.jpeg" alt="Mr. Gurucharan" loading="lazy">
+                </div>
+                <div class="team-info">
+                    <small>CMO</small>
+                    <h3>Mr. Gurucharan</h3>
+                    <p>Marketing, branding, customer research, promotion and business growth.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     MOTIVATIONAL QUOTE
+===================================================== -->
+<section class="quote-section">
+    <div class="container">
+        <div class="quote-box reveal">
+            <div class="quote-mark">“</div>
+            <h2>
+                Big ideas begin with a vision,
+                <br>
+                <span>but vision becomes reality through action.</span>
+            </h2>
+            <p>Think differently. Build confidently. Grow continuously.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     CONTACT WITH EMAILJS & STRICT VALIDATION
+===================================================== -->
+<section id="contact">
+    <div class="container">
+        <div class="reveal">
+            <div class="eyebrow">Let's Connect</div>
+            <h2 class="section-title">
+                Start your <span>next project.</span>
+            </h2>
+            <p class="section-text">
+                Have an idea, website requirement or business project?
+                Send us your details and our team can connect with you.
+            </p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info reveal">
+                <h3>Contact Us</h3>
+                <p>
+                    Tell us about your requirement and we'll get back
+                    to you with the next steps.
+                </p>
+
+                <div class="contact-item">
+                    <small>Email</small>
+                    <strong>niayouthvision@gmail.com</strong>
+                </div>
+
+                <div class="contact-item">
+                    <small>Company</small>
+                    <strong>NIA YOUTH VISION</strong>
+                </div>
+
+                <div class="hours">
+                    <div class="hours-title">WORKING HOURS</div>
+                    <div class="hour-row">
+                        <span>Monday – Friday</span>
+                        <span>10:00 AM – 5:00 PM</span>
+                    </div>
+                    <div class="hour-row">
+                        <span>Saturday</span>
+                        <span class="closed">Holiday</span>
+                    </div>
+                    <div class="hour-row">
+                        <span>Sunday</span>
+                        <span class="closed">Holiday</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EMAILJS CONTACT FORM -->
+            <div class="contact-form reveal">
+                <div class="form-title">Send an Enquiry</div>
+                <div class="form-subtitle">
+                    Fill in your details. Your enquiry will be sent directly to the NIA Youth Vision team.
+                </div>
+
+                <form id="contactForm">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label for="user_name">FULL NAME</label>
+                            <input
+                                type="text"
+                                id="user_name"
+                                name="user_name"
+                                placeholder="Enter your name"
+                                required
+                            >
+                        </div>
+
+                        <div class="input-group">
+                            <label for="user_mobile">MOBILE NUMBER (10 DIGITS)</label>
+                            <input
+                                type="tel"
+                                id="user_mobile"
+                                name="user_mobile"
+                                placeholder="e.g. 9876543210"
+                                pattern="[0-9]{10}"
+                                maxlength="10"
+                                inputmode="numeric"
+                                title="Please enter exactly 10 numeric digits."
+                                required
+                            >
+                        </div>
+
+                        <div class="input-group full">
+                            <label for="user_email">GMAIL ADDRESS</label>
+                            <input
+                                type="email"
+                                id="user_email"
+                                name="user_email"
+                                placeholder="abc@gmail.com"
+                                pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
+                                title="Please enter a valid Gmail address (ending in @gmail.com)."
+                                required
+                            >
+                        </div>
+
+                        <div class="input-group full">
+                            <label for="message">MESSAGE</label>
+                            <textarea
+                                id="message"
+                                name="message"
+                                placeholder="Tell us about your requirement..."
+                                required
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="form-submit" id="submitBtn">
+                        SUBMIT ENQUIRY →
+                    </button>
+
+                    <div id="formAlert" class="form-alert"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================
+     SUCCESS POPUP MODAL
+===================================================== -->
+<div class="modal-overlay" id="successModal">
+    <div class="modal-card">
+        <div class="modal-icon">✓</div>
+        <h3 class="modal-title">Thank You!</h3>
+        <p class="modal-text">Your enquiry has been sent successfully. The NIA Youth Vision team will get in touch with you shortly.</p>
+        <button type="button" class="modal-close-btn" id="closeModalBtn">AWESOME</button>
+    </div>
+</div>
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <img src="logo.jpeg" alt="NIA Logo">
+            <div>
+                <strong>NIA YOUTH VISION</strong>
+                <span>Web Development • Digital Solutions • Commercial Development</span>
+            </div>
+        </div>
+
+        <div class="footer-copy">
+            © 2026 NIA Youth Vision. All Rights Reserved.
+            <br>
+            Built with vision. Developed with purpose.
+        </div>
+    </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<a href="#home" class="top" id="topBtn">↑</a>
+
+
+<script>
+/* =========================================================
+   EMAILJS CONFIGURATION
+========================================================= */
+const EMAILJS_PUBLIC_KEY  = "AX6HRnChcXD0q9x7F";
+const EMAILJS_SERVICE_ID  = "service_rxebjhu";
+const EMAILJS_TEMPLATE_ID = "template_ibzaa2u";
+
+// Initialize EmailJS
+(function(){
+    emailjs.init({
+        publicKey: EMAILJS_PUBLIC_KEY
+    });
+})();
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+window.addEventListener("load", function(){
+    setTimeout(function(){
+        document.getElementById("loader").classList.add("hide");
+    }, 1000);
+});
+
+
+/* =========================================================
+   SCROLL REVEAL OBSERVER
+========================================================= */
+const revealElements = document.querySelectorAll(".reveal");
+const observer = new IntersectionObserver(
+    function(entries){
+        entries.forEach(function(entry){
+            if(entry.isIntersecting){
+                entry.target.classList.add("show");
+                observer.unobserve(entry.target);
+            }
+        });
+    },
+    { threshold: 0.12 }
+);
+
+revealElements.forEach(function(element){
+    observer.observe(element);
+});
+
+
+/* =========================================================
+   BACK TO TOP & MOBILE BOTTOM NAV SCROLL SYNC
+========================================================= */
+const topBtn = document.getElementById("topBtn");
+const mobNavItems = document.querySelectorAll(".mob-nav-item");
+const sections = document.querySelectorAll("section[id]");
+
+window.addEventListener("scroll", function(){
+    if(window.scrollY > 600){
+        topBtn.classList.add("visible");
+    } else {
+        topBtn.classList.remove("visible");
+    }
+
+    let currentSection = "";
+    sections.forEach(function(section){
+        const sectionTop = section.offsetTop - 140;
+        const sectionHeight = section.offsetHeight;
+        if(window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight){
+            currentSection = section.getAttribute("id");
+        }
+    });
+
+    if(currentSection){
+        mobNavItems.forEach(function(item){
+            if(item.getAttribute("data-section") === currentSection){
+                item.classList.add("active");
+            } else {
+                item.classList.remove("active");
+            }
+        });
+    }
+});
+
+mobNavItems.forEach(function(item){
+    item.addEventListener("click", function(){
+        mobNavItems.forEach(i => i.classList.remove("active"));
+        this.classList.add("active");
+    });
+});
+
+
+/* =========================================================
+   MOUSE PARALLAX ON HERO LOGO (DESKTOP ONLY)
+========================================================= */
+const heroLogo = document.querySelector(".hero-logo");
+document.addEventListener("mousemove", function(event){
+    if(window.innerWidth < 800) return;
+    const x = (event.clientX / window.innerWidth - .5) * 8;
+    const y = (event.clientY / window.innerHeight - .5) * 8;
+    heroLogo.style.transform = "translate(" + x + "px," + y + "px)";
+});
+
+
+/* =========================================================
+   PHONE NUMBER INPUT CLEANER (NUMBERS ONLY)
+========================================================= */
+const mobileInput = document.getElementById("user_mobile");
+mobileInput.addEventListener("input", function(){
+    this.value = this.value.replace(/[^0-9]/g, "");
+});
+
+
+/* =========================================================
+   SUCCESS MODAL LOGIC
+========================================================= */
+const successModal = document.getElementById("successModal");
+const closeModalBtn = document.getElementById("closeModalBtn");
+
+function openModal(){
+    successModal.classList.add("open");
+}
+
+function closeModal(){
+    successModal.classList.remove("open");
+}
+
+closeModalBtn.addEventListener("click", closeModal);
+
+successModal.addEventListener("click", function(e){
+    if(e.target === successModal){
+        closeModal();
+    }
+});
+
+
+/* =========================================================
+   EMAILJS CONTACT FORM SUBMISSION WITH VALIDATION
+========================================================= */
+const contactForm = document.getElementById("contactForm");
+const submitBtn = document.getElementById("submitBtn");
+const formAlert = document.getElementById("formAlert");
+
+contactForm.addEventListener("submit", function(event){
+    event.preventDefault();
+
+    const mobileVal = document.getElementById("user_mobile").value.trim();
+    const emailVal = document.getElementById("user_email").value.trim().toLowerCase();
+
+    // Strict validation patterns
+    const phonePattern = /^[0-9]{10}$/;
+    const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+    if(!phonePattern.test(mobileVal)){
+        formAlert.className = "form-alert error";
+        formAlert.textContent = "✕ Mobile number must be exactly 10 numeric digits.";
+        formAlert.style.display = "block";
+        return;
+    }
+
+    if(!gmailPattern.test(emailVal)){
+        formAlert.className = "form-alert error";
+        formAlert.textContent = "✕ Email must be a valid @gmail.com address.";
+        formAlert.style.display = "block";
+        return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "SENDING ENQUIRY...";
+    formAlert.className = "form-alert";
+    formAlert.style.display = "none";
+
+    const templateParams = {
+        user_name: document.getElementById("user_name").value.trim(),
+        user_mobile: mobileVal,
+        user_email: emailVal,
+        message: document.getElementById("message").value.trim()
+    };
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+        .then(function(response){
+            contactForm.reset();
+            openModal();
+        })
+        .catch(function(error){
+            formAlert.className = "form-alert error";
+            formAlert.textContent = "✕ Failed to send enquiry. Please try again or reach us at niayouthvision@gmail.com";
+            console.error("EmailJS Error:", error);
+        })
+        .finally(function(){
+            submitBtn.disabled = false;
+            submitBtn.textContent = "SUBMIT ENQUIRY →";
+        });
+});
+</script>
+
+</body>
+</html>
